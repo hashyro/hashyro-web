@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hashyro — Secure Runtime (Coming Soon)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/png" href="/public/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/public/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/public/favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/public/favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="/public/favicon/site.webmanifest" />
+  </head>
+ <body class="min-h-screen bg-neutral-950 text-white antialiased">
+    <!-- Background gradient -->
+    <div aria-hidden="true" class="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-b from-neutral-900 via-neutral-950 to-black"></div>
+      <div class="absolute left-1/2 top-[-10rem] -translate-x-1/2 blur-3xl">
+        <div class="h-72 w-[50rem] rounded-full bg-gradient-to-tr from-indigo-600/40 via-fuchsia-500/20 to-cyan-500/30"></div>
+      </div>
+    </div>
+
+    <header class="relative border-b border-white/10">
+      <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4">
+        <!-- Logo Hashyro : logo-horizontal-color-white = version couleur sur fond sombre. Voir public/logo/1.1.0/ pour les variantes. -->
+        <a href="#" class="flex items-center gap-3">
+          <img src="public/logo/1.1.0/logo-horizontal-color-white.svg" alt="Hashyro" class="h-7 w-auto" />
+        </a>
+        <nav class="hidden items-center gap-6 sm:flex">
+          <!-- <a href="#" class="text-sm text-neutral-300 hover:text-white">Docs</a>
+          <a href="#" class="text-sm text-neutral-300 hover:text-white">Roadmap</a>
+          <a href="#" class="text-sm text-neutral-300 hover:text-white">EE (Soon)</a> -->
+        </nav>
+        <div class="flex items-center gap-3">
+          <a href="#" class="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white hover:bg-white/10">
+            <svg viewBox="0 0 24 24" aria-hidden="true" class="h-4 w-4"><path fill="currentColor" d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            <span>GitHub</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main class="relative">
+      <section class="mx-auto max-w-7xl px-6 pt-16 sm:pt-24">
+        <div class="mx-auto max-w-3xl text-center">
+          <div class="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-neutral-300">
+            <span class="inline-flex h-2 w-2 rounded-full bg-amber-400"></span>
+            <span>Coming soon — sign up for release updates</span>
+          </div>
+          <h1 class="text-balance text-4xl font-semibold tracking-tight sm:text-5xl">
+            Securely manage and inject application secrets at runtime
+          </h1>
+          <p class="mt-4 text-pretty text-neutral-300 sm:text-lg">
+            Hashyro is an open-source platform that centralizes sensitive configuration and injects it through a secure API and dedicated CLI.
+            Secrets are injected as environment variables — no .env files committed, no leakage risk.
+            Built for modern stacks, CI/CD pipelines, containers, and cloud-native applications.
+          </p>
+
+          <!-- Formulaire Brevo : soumission via fetch (sans redirection). Si CORS bloque, fallback sur submit classique. -->
+          <div id="sib-form-container" class="mx-auto mt-8 max-w-lg">
+            <div id="error-message" class="mb-4 hidden rounded-lg border border-red-500/50 bg-red-500/10 p-4 text-sm text-red-300" role="alert"></div>
+            <div id="success-message" class="mb-4 hidden rounded-xl border border-emerald-500/50 bg-emerald-500/20 p-6 text-center" role="status">
+              <div class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-emerald-500/30 text-emerald-400">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <p class="mt-3 text-lg font-medium text-emerald-200">Thank you!</p>
+              <p id="success-subtitle" class="mt-1 text-sm text-emerald-300/90"></p>
+            </div>
+            <form id="sib-form" action="https://75f93f06.sibforms.com/serve/MUIFAH0tRfsitgbdQlaZstVjEQAFWPoOzLV8RPclS6R8ZGrbZokT1WxfrFSngOM_qrvb6TrqM3gKkiQ5L8zZVPMVzoqElRHMfUfT_j5zNBK2l3Kpr6nePxUCtq0CXWbFr5D9Dq81jwP2bQg4S-2inwE6mSpXAyAQ0vTk7QodJQL5gx7WNkX0HsPVHw84cEtroTfimvAIctLf5qgFbg==" method="post" data-type="subscription">
+            <input type="text" name="email_address_check" value="" tabindex="-1" autocomplete="off" class="absolute -left-[9999px]" aria-hidden="true">
+            <input type="hidden" name="locale" value="en">
+            <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+              <div class="relative w-full">
+                <label for="email" class="sr-only">Email address</label>
+                <input
+                  id="email"
+                  name="EMAIL"
+                  type="email"
+                  required
+                  placeholder="you@company.com"
+                  class="block w-full rounded-lg border border-white/10 bg-white/5 px-3.5 py-2.5 text-sm/6 text-white shadow-sm ring-1 ring-white/10 placeholder:text-neutral-400 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                />
+                <div class="pointer-events-none absolute inset-y-0 right-3 hidden items-center sm:flex">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" class="h-5 w-5 text-neutral-400">
+                    <path fill="currentColor" d="M2 6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v.35l-10 6.25L2 6.35V6Zm0 3.12v8.88a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9.12l-9.38 5.86a2 2 0 0 1-2.24 0L2 9.12Z"/>
+                  </svg>
+                </div>
+              </div>
+              <button id="submit-btn" type="submit" class="inline-flex w-full shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-medium text-white shadow-sm transition hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-70 sm:w-auto">
+                <span id="btn-text">
+                  Notify me
+                  <svg viewBox="0 0 24 24" aria-hidden="true" class="inline h-4 w-4 shrink-0">
+                    <path fill="currentColor" d="M13.17 12 8.7 7.53l1.41-1.41L16 12l-5.89 5.88-1.41-1.41L13.17 12Z"/>
+                  </svg>
+                </span>
+                <span id="btn-loader" class="hidden items-center gap-2">
+                  <svg class="h-4 w-4 animate-spin" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"/>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+                  </svg>
+                  Sending…
+                </span>
+              </button>
+            </div>
+            <p class="mt-3 text-xs text-neutral-400">
+              We’ll only email you about the Hashyro release. Unsubscribe anytime.
+            </p>
+          </form>
+        </div>
+
+        <div class="mt-16 grid gap-6 sm:mt-20 sm:grid-cols-2 lg:grid-cols-3">
+          <div class="rounded-xl border border-white/10 bg-white/5 p-5">
+            <div class="flex items-center gap-3">
+              <span class="grid h-9 w-9 place-items-center rounded-md bg-indigo-600/20 text-indigo-300 ring-1 ring-inset ring-indigo-600/40">
+                <svg viewBox="0 0 24 24" class="h-5 w-5" aria-hidden="true"><path fill="currentColor" d="M12 2 3 6v6c0 5.25 3.4 10.18 9 11 5.6-.82 9-5.75 9-11V6l-9-4Zm0 3.27L17.46 7.5c-1.51 3.4-3.9 6.33-6.96 8.53A20.8 20.8 0 0 1 6.54 7.5L12 5.27Z"/></svg>
+              </span>
+              <h3 class="text-sm font-medium">Secure runtime injection</h3>
+            </div>
+            <p class="mt-3 text-sm text-neutral-300">Deliver secrets at runtime via a hardened API — no secrets baked into images or stored in source repos.</p>
+          </div>
+
+          <div class="rounded-xl border border-white/10 bg-white/5 p-5">
+            <div class="flex items-center gap-3">
+              <span class="grid h-9 w-9 place-items-center rounded-md bg-fuchsia-600/20 text-fuchsia-300 ring-1 ring-inset ring-fuchsia-600/40">
+                <svg viewBox="0 0 24 24" class="h-5 w-5" aria-hidden="true"><path fill="currentColor" d="M4 4h16v4H4zm0 6h10v4H4zm0 6h16v4H4z"/></svg>
+              </span>
+              <h3 class="text-sm font-medium">Centralized config via API & CLI</h3>
+            </div>
+            <p class="mt-3 text-sm text-neutral-300">Manage secrets in one place. Automate with a dedicated CLI and integrate with pipelines.</p>
+          </div>
+
+          <div class="rounded-xl border border-white/10 bg-white/5 p-5">
+            <div class="flex items-center gap-3">
+              <span class="grid h-9 w-9 place-items-center rounded-md bg-cyan-600/20 text-cyan-300 ring-1 ring-inset ring-cyan-600/40">
+                <svg viewBox="0 0 24 24" class="h-5 w-5" aria-hidden="true"><path fill="currentColor" d="M7 2h10v4H7zM5 8h14v4H5zM3 14h18v4H3z"/></svg>
+              </span>
+              <h3 class="text-sm font-medium">Env vars, not .env files</h3>
+            </div>
+            <p class="mt-3 text-sm text-neutral-300">Inject secrets as environment variables with strict scoping — avoid committed .env files and leakage.</p>
+          </div>
+
+          <div class="rounded-xl border border-white/10 bg-white/5 p-5">
+ <div class="flex items-center gap-3">
+              <span class="grid h-9 w-9 place-items-center rounded-md bg-emerald-600/20 text-emerald-300 ring-1 ring-inset ring-emerald-600/40">
+                <svg viewBox="0 0 24 24" class="h-5 w-5" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 .001 20.00110 10 0 0 0 12 2Zm1 14H7v-2h6v2Zm4-4H7V8h10v4Z"/></svg>
+              </span>
+              <h3 class="text-sm font-medium">Modern stacks & pipelines</h3>
+            </div>
+            <p class="mt-3 text-sm text-neutral-300">Designed for CI/CD, containers, serverless, and cloud-native deployments.</p>
+          </div>
+
+          <div class="rounded-xl border border-white/10 bg-white/5 p-5">
+            <div class="flex items-center gap-3">
+              <span class="grid h-9 w-9 place-items-center rounded-md bg-amber-600/20 text-amber-300 ring-1 ring-inset ring-amber-600/40">
+                <svg viewBox="0 0 24 24" class="h-5 w-5" aria-hidden="true"><path fill="currentColor" d="M12 2 1 21h22L12 2Zm0 5.3L18.2 19H5.8L12 7.3Z"/></svg>
+              </span>
+              <h3 class="text-sm font-medium">Enterprise Edition (EE)</h3>
+            </div>
+            <p class="mt-3 text-sm text-neutral-300">Planned EE adds advanced security, RBAC, audit trails, SSO, policy-based access, and team features.</p>
+          </div>
+
+          <div class="rounded-xl border border-white/10 bg-white/5 p-5">
+            <div class="flex items-center gap-3">
+              <span class="grid h-9 w-9 place-items-center rounded-md bg-sky-600/20 text-sky-300 ring-1 ring-inset ring-sky-600/40">
+                <svg viewBox="0 0 24 24" class="h-5 w-5" aria-hidden="true"><path fill="currentColor" d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+              </span>
+              <h3 class="text-sm font-medium">Open-source core</h3>
+            </div>
+ <p class="mt-3 text-sm text-neutral-300">Transparent, extensible, and community-driven. Self-hostable with clean interfaces.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="mx-auto max-w-7xl px-6 pb-24 pt-16 sm:pb-32">
+        <div class="grid items-center gap-10 lg:grid-cols-2">
+          <div class="order-2 lg:order-1">
+            <div class="rounded-xl border border-white/10 bg-neutral-900/50 p-4 shadow-sm ring-1 ring-white/10">
+              <div class="flex items-center justify-between border-b border-white/10 pb-3">
+                <div class="flex items-center gap-2 text-xs text-neutral-300">
+                  <span class="inline-flex h-2 w-2 rounded-full bg-red-500/70"></span>
+                  <span class="inline-flex h-2 w-2 rounded-full bg-yellow-400/70"></span>
+                  <span class="inline-flex h-2 w-2 rounded-full bg-emerald-500/70"></span>
+                </div>
+                <span class="text-xs text-neutral-400">hashyro CLI</span>
+              </div>
+              <pre class="mt-3 overflow-x-auto rounded-lg bg-black/60 p-4 text-sm text-neutral-200">
+<span class="text-neutral-400"># Inject secrets at runtime into your process</span>
+$ hashyro inject --env production --service api --exec "node server.js"
+
+<span class="text-neutral-400"># Pull secrets via API with short-lived tokens</span>
+$ hashyro secrets get DATABASE_URL --env production
+
+<span class="text-neutral-400"># Rotate secrets and propagate safely</span>
+$ hashyro secrets rotate --service payments --key STRIPE_API_KEY
+              </pre>
+            </div>
+          </div>
+          <div class="order-2 lg:order-2">
+            <h2 class="text-2xl font-semibold tracking-tight">Built for real-world workflows</h2>
+            <p class="mt-3 text-neutral-300">
+              Integrate with CI/CD and container platforms. Hashyro keeps secrets out of images and repos while making them available exactly when needed.
+            </p>
+            <div class="mt-6 flex flex-wrap items-center gap-3 text-sm text-neutral-300">
+              <span class="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-1.5">
+                <svg viewBox="0 0 24 24" class="h-4 w-4" aria-hidden="true"><path fill="currentColor" d="M12 2 1 21h22L12 2Z"/></svg>
+                Kubernetes
+              </span>
+              <span class="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-1.5">
+                <svg viewBox="0 0 24 24" class="h-4 w-4" aria-hidden=""><path fill="currentColor" d="M12 2a10 10 0 1 0 .001 20.001A10 10 0 0 0 12 2Z"/></svg>
+                Docker
+              </span>
+              <span class="inline-flex items-center gap-2 rounded border border-white/10 bg-white/5 px-3 py-1.5">
+                <svg viewBox="0 0 24 24" class="h-4 w-4" aria-hidden="true"><path fill="currentColor" d="M17 3H7a2 2 0 0 0-2 2v14l7-3 7 3V5a2 2 0 0 0-2-2Z"/></svg>
+                GitHub Actions
+              </span>
+              <span class="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-1.5">
+                <svg viewBox="0 0 24 24" class="h-4 w-4" aria-hidden="true"><path fill="currentColor" d="M3 5h18v14H3z"/></svg>
+                Serverless
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="border-t border-white/10">
+      <div class="mx-auto max-w-7xl px-6 py-10">
+        <div class="flex flex-col items-center justify-between gap-6 sm:flex-row">
+          <!-- Logo Hashyro : logo-horizontal-bw-white = version noir et blanc pour fond sombre. -->
+          <a href="#" class="flex items-center gap-3">
+            <img src="public/logo/1.1.0/logo-horizontal-bw-white.svg" alt="Hashyro" class="h-8 w-auto" />
+          </a>
+          <div class="text-center text-xs text-neutral-400 sm:text-right">
+            <p>Open-source core. EE planned with advanced security and features.</p>
+            <p class="mt-1">© <span id="year">2026</span> Hashyro. All rights reserved.</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+    <script>
+      window.REQUIRED_CODE_ERROR_MESSAGE = 'Please choose a country code';
+      window.LOCALE = 'en';
+      window.EMAIL_INVALID_MESSAGE = window.SMS_INVALID_MESSAGE = 'The information provided is invalid. Please review the field format and try again.';
+      window.REQUIRED_ERROR_MESSAGE = 'This field cannot be left blank.';
+      window.GENERIC_INVALID_MESSAGE = 'The information provided is invalid. Please review the field format and try again.';
+      window.translation = { common: { selectedList: '{quantity} list selected', selectedLists: '{quantity} lists selected' } };
+      var AUTOHIDE = Boolean(0);
+    </script>
+    <script defer src="https://sibforms.com/forms/end-form/build/main.js"></script>
+    <script>
+      (function () {
+        var STORAGE_KEY = 'hashyro_subscribed';
+
+        function setSubscribed() {
+          try { localStorage.setItem(STORAGE_KEY, '1'); } catch (e) {}
+        }
+
+        function hasSubscribed() {
+          try { return localStorage.getItem(STORAGE_KEY) === '1'; } catch (e) { return false; }
+        }
+
+        var MSG_PENDING = 'Check your inbox — you\'ll receive an email to confirm your subscription.';
+        var MSG_ON_LIST = 'You\'re on the list. We\'ll notify you when Hashyro launches.';
+
+        function showThankYou(isReload) {
+          var form = document.getElementById('sib-form');
+          var success = document.getElementById('success-message');
+          var subtitle = document.getElementById('success-subtitle');
+          var error = document.getElementById('error-message');
+          if (form) form.classList.add('hidden');
+          if (error) error.classList.add('hidden');
+          if (subtitle) subtitle.textContent = isReload ? MSG_ON_LIST : MSG_PENDING;
+          if (success) success.classList.remove('hidden');
+        }
+
+        function setLoading(loading) {
+          var btn = document.getElementById('submit-btn');
+          var text = document.getElementById('btn-text');
+          var loader = document.getElementById('btn-loader');
+          if (!btn) return;
+          btn.disabled = loading;
+          if (text) text.classList.toggle('hidden', loading);
+          if (loader) { loader.classList.toggle('hidden', !loading); loader.classList.toggle('flex', loading); }
+        }
+
+        if (hasSubscribed()) showThankYou(true);
+
+        var form = document.getElementById('sib-form');
+        if (form) {
+          form.addEventListener('submit', function () {
+            setLoading(true);
+            setTimeout(function () {
+              setSubscribed();
+              showThankYou(false);
+              setLoading(false);
+            }, 1500);
+          }, true);
+        }
+      })();
+    </script>
+  </body>
+</html>
